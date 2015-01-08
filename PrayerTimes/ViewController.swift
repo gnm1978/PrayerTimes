@@ -26,6 +26,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var timer = NSTimer()
     
     var prayerArray = []
+   
     
     // get the current date
     var currentDate = CurrentDate()
@@ -41,6 +42,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var ishaTime: UILabel!
     
     @IBOutlet weak var currentTimeLabel: UILabel!
+    
+    
     @IBOutlet weak var cityStateLabel: UILabel!
     
     
@@ -62,25 +65,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
         }
         var date = NSDate(timeIntervalSince1970: 1)
-        var latitude : CLLocationDegrees = 41.472754
-        var longitude : CLLocationDegrees = -87.383006
-        
-        pray.setTimeFormat(1)
-        pray.setCalcMethod(2)
-        
-        
-        
-        
-        
        
+        pray.setTimeFormat(1)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         
         getCurrentTime()
         
-        
-       
         
     }
 
@@ -93,9 +86,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func getCurrentTime() {
         
-        
         timer.invalidate()
-        
         
         
         currentTime = NSDate()
@@ -139,6 +130,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         println(prayerArray)
     }
+    
+    func prayerAlert () {
+        
+            var alert = UIAlertController(title: "Pray", message: "Its Time to Pray", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        
+        
+    }
+    
+    @IBAction func testbutton(sender: AnyObject) {
+        
+        var alert = UIAlertController(title: "test", message: "this is a test alert", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+    
     
     
 }
