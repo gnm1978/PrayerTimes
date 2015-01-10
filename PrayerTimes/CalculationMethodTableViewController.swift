@@ -84,16 +84,14 @@ class CalculationMethodTableViewController: UITableViewController, UITableViewDa
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
         
         cell.textLabel?.text = prayerMethodeNames[indexPath.row].methodeName
-        var row = indexPath.row
-    
         
-        if row == calcMethodNumber.calcMethodChecked {
+        if indexPath.row == calcMethodNumber.calcMethodChecked {
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-            prayerMethodeNames[row].isChecked = true
-            prayer.setCalcMethod(prayerMethodeNames[row].methodeNumber) 
+            prayerMethodeNames[indexPath.row].isChecked = true
+            prayer.setCalcMethod(prayerMethodeNames[indexPath.row].methodeNumber)
         } else {
             cell.accessoryType = UITableViewCellAccessoryType.None
-            prayerMethodeNames[row].isChecked = false
+            prayerMethodeNames[indexPath.row].isChecked = false
         }
         
         return cell
@@ -102,15 +100,15 @@ class CalculationMethodTableViewController: UITableViewController, UITableViewDa
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
             cell.textLabel?.text = asrPrayerMethodNames[indexPath.row].methodeName
             
-            var row = indexPath.row
+           
             
-            if row == calcMethodNumber.asrMethodChecked {
+            if indexPath.row == calcMethodNumber.asrMethodChecked {
                 cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-                asrPrayerMethodNames[row].isChecked = true
-                prayer.setAsrMethod(asrPrayerMethodNames[row].methodeNumber)
+                asrPrayerMethodNames[indexPath.row].isChecked = true
+                prayer.setAsrMethod(asrPrayerMethodNames[indexPath.row].methodeNumber)
             }else {
                 cell.accessoryType = UITableViewCellAccessoryType.None
-                asrPrayerMethodNames[row].isChecked = false
+                asrPrayerMethodNames[indexPath.row].isChecked = false
             }
             
             return cell

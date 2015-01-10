@@ -15,12 +15,43 @@ class AlertsDetailTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        if alerts?.name == "Fajr" {
+//            loadSettings()
+//        } else if alerts?.name == "Sunrise" {
+//            loadSettings()
+//        } else if alerts?.name == "Dhuhr" {
+//            loadSettings()
+//        } else if alerts?.name == "Asr" {
+//            loadSettings()
+//        } else if alerts?.name == "Maghrib" {
+//            loadSettings()
+//        } else if alerts?.name == "Isha" {
+//            loadSettings()
+//        }
+        
+        loadSettings()
+    }
+    
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    
+    override func viewDidDisappear(animated: Bool) {
+        
+//        if alerts?.name == "Fajr" {
+//            saveSetting()
+//        } else if alerts!.name == "Sunrise" {
+//            saveSetting()
+//        } else if alerts?.name == "Dhuhr" {
+//            saveSetting()
+//        } else if alerts?.name == "Asr" {
+//            saveSetting()
+//        } else if alerts?.name == "Maghrib" {
+//            saveSetting()
+//        } else if alerts?.name == "Isha" {
+//            saveSetting()
+//        }
+        
+        saveSetting()
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,22 +83,137 @@ class AlertsDetailTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("AlertsDetailCell", forIndexPath: indexPath) as UITableViewCell
 
         // Configure the cell...
-        
         cell.textLabel?.text = alerts?.alertNames[indexPath.row]
-
+        
+                
+        if alerts?.name == "Fajr" {
+                if indexPath.row == alerts?.fajrAlertNumber {
+                    
+                    cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                } else {
+                    cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        } else if alerts?.name == "Sunrise" {
+            
+                if indexPath.row == alerts?.sunriseAlertNumber {
+                    cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                } else {
+                    cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        } else if alerts?.name == "Dhuhr"  {
+            
+                if indexPath.row == alerts?.dhuhrAlertNumber {
+                    cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                } else {
+                    cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        } else if alerts?.name == "Asr" {
+            
+                if indexPath.row == alerts?.asralertNumber {
+                    cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                } else {
+                    cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        } else if alerts?.name == "Maghrib" {
+            
+                if indexPath.row == alerts?.maghribAlertNumber {
+                    cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                } else {
+                    cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        } else if alerts?.name == "Isha" {
+                if indexPath.row == alerts?.ishaAlertNumber {
+                    cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                } else {
+                    cell.accessoryType = UITableViewCellAccessoryType.None
+            }
+        }
+        
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if alerts?.name == "Fajr" {
+                alerts?.fajrAlertNumber = indexPath.row
+        } else if alerts?.name == "Sunrise" {
+                alerts?.sunriseAlertNumber = indexPath.row
+        }else if alerts?.name == "Dhuhr" {
+                alerts?.dhuhrAlertNumber = indexPath.row
+        }else if alerts?.name == "Asr" {
+                alerts?.asralertNumber = indexPath.row
+        }else if alerts?.name == "Maghrib" {
+                alerts?.maghribAlertNumber = indexPath.row
+        }else if alerts?.name == "Isha" {
+                alerts?.ishaAlertNumber = indexPath.row
+        }
+        tableView.reloadData()
+        
+        
+    }
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         if section == 0 {
             
             if alerts?.name != nil {
             
-            return alerts!.name + " PRAYER ALERT SETUP"
+            return String("\(alerts!.name)  PRAYER ALERT SETUP")
             }
         }
         return ""
+    }
+    
+    func saveSetting () {
+        
+        
+            
+            var saveAlert = NSUserDefaults.standardUserDefaults()
+            saveAlert.setObject(alerts?.fajrAlertNumber, forKey: "FajrAlert")
+            saveAlert.setObject(alerts?.sunriseAlertNumber, forKey: "SunriseAlert")
+            saveAlert.setObject(alerts?.dhuhrAlertNumber, forKey: "DhuhrAlert")
+            saveAlert.setObject(alerts?.asralertNumber, forKey: "AsrAlert")
+            saveAlert.setObject(alerts?.maghribAlertNumber, forKey: "MaghribAlert")
+            saveAlert.setObject(alerts?.ishaAlertNumber, forKey: "IshaAlert")
+            
+            
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
+        
+    }
+    
+    func loadSettings () {
+        
+        var loadAlertSettings = NSUserDefaults.standardUserDefaults()
+        var fajrAlert = loadAlertSettings.objectForKey("FajrAlert") as? Int
+        var sunriseAlert = loadAlertSettings.objectForKey("SunriseAlert") as? Int
+        var dhuhrAlert = loadAlertSettings.objectForKey("DhuhrAlert") as? Int
+        var asrAlert = loadAlertSettings.objectForKey("AsrAlert") as? Int
+        var maghribAlert = loadAlertSettings.objectForKey("MaghribAlert") as? Int
+        var ishaAlert = loadAlertSettings.objectForKey("IshaAlert") as? Int
+        
+        
+        
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        alerts?.fajrAlertNumber = fajrAlert
+        alerts?.sunriseAlertNumber = sunriseAlert
+        alerts?.dhuhrAlertNumber = dhuhrAlert
+        alerts?.asralertNumber = asrAlert
+        alerts?.maghribAlertNumber = maghribAlert
+        alerts?.ishaAlertNumber = ishaAlert
+        
+        println(fajrAlert)
+        println(sunriseAlert)
+        println(dhuhrAlert)
+        println(asrAlert)
+        println(maghribAlert)
+        println(maghribAlert)        
+        
+        println(alerts?.fajrAlertNumber)
+        
+        
+        
+        
     }
     
 

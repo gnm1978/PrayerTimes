@@ -12,6 +12,13 @@ class UserSettings: NSObject {
     
     var calcMethodChecked : Int?
     var asrMethodChecked : Int?
-    var alertsChecked : Int?
+    
+    var alerts : Int?
+//    var fajrAlert : Int?
+//    var sunRiseAlert : Int?
+//    var dhuhrAlert : Int?
+//    var asrAlert : Int?
+//    var maghribAlert : Int?
+//    var ishaAlert : Int?
    
 }

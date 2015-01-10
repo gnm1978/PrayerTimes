@@ -99,7 +99,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         var locValue:CLLocationCoordinate2D = manager.location.coordinate
-        println("locations = \(locValue.latitude) \(locValue.longitude)")
+        //println("locations = \(locValue.latitude) \(locValue.longitude)")
         self.locationLabel.text = "\(locValue.latitude)" + " \(locValue.longitude)"
         
         var prayerArray = pray.getDatePrayerTimes(currentDate.year, andMonth: currentDate.month, andDay: currentDate.day, andLatitude: locValue.latitude, andLongitude: locValue.longitude, andtimeZone: pray.timeZone)
@@ -115,7 +115,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             if error == nil && placeMarks.count > 0 {
                 
-                println(placeMarks[0])
+                //println(placeMarks[0])
                 self.placeMark = placeMarks[0] as? CLPlacemark
                 if let city = self.placeMark?.locality {
                 
@@ -128,7 +128,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
         })
         
-        println(prayerArray)
+        //println(prayerArray)
     }
     
     func prayerAlert () {
