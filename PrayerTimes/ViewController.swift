@@ -16,6 +16,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
     var pray = PrayTime()
+    
+    var test = PrayTime()
     let locationManager = CLLocationManager()
     var geocoder = CLGeocoder()
     var placeMark : CLPlacemark?
@@ -53,6 +55,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         
         
+        // Test Code for local notification----------------------------------------------//
+        var dateComp : NSDateComponents = NSDateComponents()
+        dateComp.year = 2015
+        dateComp.month = 1
+        dateComp.day = 10
+        dateComp.hour = 20
+        dateComp.minute = 05
+        dateComp.timeZone = NSTimeZone.systemTimeZone()
+        
+        var calender : NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+        var date : NSDate = calender.dateFromComponents(dateComp)!
+        
+        var notification : UILocalNotification = UILocalNotification()
+        notification.category = "FIRST_CATEGORY"
+        notification.alertBody = "Time to Pray"
+        notification.fireDate = date
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
+       // End of test code----------------------------------------------------------------//
+        
+        
+        
+        
         
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
@@ -64,9 +90,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             self.locationManager.startUpdatingLocation()
             
         }
-        var date = NSDate(timeIntervalSince1970: 1)
+        
        
         pray.setTimeFormat(1)
+//        test.setTimeFormat(3)
+//       var test2 = test.getDatePrayerTimes(2015, andMonth: 1, andDay: 9, andLatitude: locationManager.location.coordinate.latitude, andLongitude: locationManager.location.coordinate.longitude, andtimeZone: -6)
+//        println(test2)
+        
         
     }
     
@@ -104,12 +134,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         var prayerArray = pray.getDatePrayerTimes(currentDate.year, andMonth: currentDate.month, andDay: currentDate.day, andLatitude: locValue.latitude, andLongitude: locValue.longitude, andtimeZone: pray.timeZone)
         
+        println(prayerArray)
+        
         self.fajrTime.text = String(prayerArray[0] as NSString)
+        //self.fajrTime.text = prayerArray[0] as? String
         self.sunriseTime.text = String(prayerArray[1] as NSString)
+        //self.sunriseTime.text = prayerArray[1] as? String
         self.dhuhrTime.text = String(prayerArray[2] as NSString)
+        //self.dhuhrTime.text = prayerArray[2] as? String
         self.asrTime.text = String(prayerArray[3] as NSString)
+        //self.asrTime.text = prayerArray[3] as? String
         self.maghribTime.text = String(prayerArray[4] as NSString)
+        //self.maghribTime.text = prayerArray[4] as? String
         self.ishaTime.text = String(prayerArray[6] as NSString)
+        //self.ishaTime.text = prayerArray[5] as? String
         
         geocoder.reverseGeocodeLocation(manager.location, completionHandler: { (placeMarks, error) -> Void in
             

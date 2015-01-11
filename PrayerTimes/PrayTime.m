@@ -473,9 +473,9 @@ double JDate;      // Julian date
 // return prayer times for a given date
 -(NSMutableArray*)getPrayerTimes: (NSDateComponents*)date andLatitude:(double)latitude andLongitude:(double)longitude andtimeZone:(double)tZone {
 	
-	NSInteger year = [date year];
-	NSInteger month = [date month];
-	NSInteger day = [date day];
+	int year = (int)[date year];
+	int month = (int)[date month];
+	int day = (int)[date day];
 	return [self getDatePrayerTimes:year andMonth:month andDay:day andLatitude:latitude andLongitude:longitude andtimeZone:tZone];
 }
 
@@ -506,7 +506,7 @@ double JDate;      // Julian date
 		else
 			Cust[i] = params[i];
 	}
-	calcMethod = Custom;
+	calcMethod = (int)Custom;
 }
 
 // set the angle for calculating Fajr

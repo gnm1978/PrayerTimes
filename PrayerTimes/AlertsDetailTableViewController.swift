@@ -90,8 +90,10 @@ class AlertsDetailTableViewController: UITableViewController {
                 if indexPath.row == alerts?.fajrAlertNumber {
                     
                     cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                    cell.textLabel?.textColor = UIColor.redColor()
                 } else {
                     cell.accessoryType = UITableViewCellAccessoryType.None
+                    cell.textLabel?.textColor = UIColor.blackColor()
             }
         } else if alerts?.name == "Sunrise" {
             
@@ -201,18 +203,6 @@ class AlertsDetailTableViewController: UITableViewController {
         alerts?.asralertNumber = asrAlert
         alerts?.maghribAlertNumber = maghribAlert
         alerts?.ishaAlertNumber = ishaAlert
-        
-        println(fajrAlert)
-        println(sunriseAlert)
-        println(dhuhrAlert)
-        println(asrAlert)
-        println(maghribAlert)
-        println(maghribAlert)        
-        
-        println(alerts?.fajrAlertNumber)
-        
-        
-        
         
     }
     
