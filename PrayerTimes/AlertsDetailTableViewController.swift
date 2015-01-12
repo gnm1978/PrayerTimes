@@ -12,44 +12,13 @@ class AlertsDetailTableViewController: UITableViewController {
     
     
     var alerts : Alert?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        if alerts?.name == "Fajr" {
-//            loadSettings()
-//        } else if alerts?.name == "Sunrise" {
-//            loadSettings()
-//        } else if alerts?.name == "Dhuhr" {
-//            loadSettings()
-//        } else if alerts?.name == "Asr" {
-//            loadSettings()
-//        } else if alerts?.name == "Maghrib" {
-//            loadSettings()
-//        } else if alerts?.name == "Isha" {
-//            loadSettings()
-//        }
-        
         loadSettings()
     }
-    
-
-    
     override func viewDidDisappear(animated: Bool) {
-        
-//        if alerts?.name == "Fajr" {
-//            saveSetting()
-//        } else if alerts!.name == "Sunrise" {
-//            saveSetting()
-//        } else if alerts?.name == "Dhuhr" {
-//            saveSetting()
-//        } else if alerts?.name == "Asr" {
-//            saveSetting()
-//        } else if alerts?.name == "Maghrib" {
-//            saveSetting()
-//        } else if alerts?.name == "Isha" {
-//            saveSetting()
-//        }
         
         saveSetting()
     }
@@ -87,7 +56,7 @@ class AlertsDetailTableViewController: UITableViewController {
         
                 
         if alerts?.name == "Fajr" {
-                if indexPath.row == alerts?.fajrAlertNumber {
+                if indexPath.row == alerts?.alertNumber {
                     
                     cell.accessoryType = UITableViewCellAccessoryType.Checkmark
                     cell.textLabel?.textColor = UIColor.redColor()
@@ -97,37 +66,47 @@ class AlertsDetailTableViewController: UITableViewController {
             }
         } else if alerts?.name == "Sunrise" {
             
-                if indexPath.row == alerts?.sunriseAlertNumber {
+                if indexPath.row == alerts?.alertNumber {
                     cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                    cell.textLabel?.textColor = UIColor.redColor()
                 } else {
                     cell.accessoryType = UITableViewCellAccessoryType.None
+                    cell.textLabel?.textColor = UIColor.blackColor()
             }
         } else if alerts?.name == "Dhuhr"  {
             
-                if indexPath.row == alerts?.dhuhrAlertNumber {
+                if indexPath.row == alerts?.alertNumber {
                     cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                    cell.textLabel?.textColor = UIColor.redColor()
                 } else {
                     cell.accessoryType = UITableViewCellAccessoryType.None
+                    cell.textLabel?.textColor = UIColor.blackColor()
             }
         } else if alerts?.name == "Asr" {
             
-                if indexPath.row == alerts?.asralertNumber {
+                if indexPath.row == alerts?.alertNumber {
                     cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                    cell.textLabel?.textColor = UIColor.redColor()
                 } else {
                     cell.accessoryType = UITableViewCellAccessoryType.None
+                    cell.textLabel?.textColor = UIColor.blackColor()
             }
         } else if alerts?.name == "Maghrib" {
             
-                if indexPath.row == alerts?.maghribAlertNumber {
+                if indexPath.row == alerts?.alertNumber {
                     cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                    cell.textLabel?.textColor = UIColor.redColor()
                 } else {
                     cell.accessoryType = UITableViewCellAccessoryType.None
+                    cell.textLabel?.textColor = UIColor.blackColor()
             }
         } else if alerts?.name == "Isha" {
-                if indexPath.row == alerts?.ishaAlertNumber {
+                if indexPath.row == alerts?.alertNumber {
                     cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                    cell.textLabel?.textColor = UIColor.redColor()
                 } else {
                     cell.accessoryType = UITableViewCellAccessoryType.None
+                    cell.textLabel?.textColor = UIColor.blackColor()
             }
         }
         
@@ -137,17 +116,17 @@ class AlertsDetailTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if alerts?.name == "Fajr" {
-                alerts?.fajrAlertNumber = indexPath.row
+                alerts?.alertNumber = indexPath.row
         } else if alerts?.name == "Sunrise" {
-                alerts?.sunriseAlertNumber = indexPath.row
+                alerts?.alertNumber = indexPath.row
         }else if alerts?.name == "Dhuhr" {
-                alerts?.dhuhrAlertNumber = indexPath.row
+                alerts?.alertNumber = indexPath.row
         }else if alerts?.name == "Asr" {
-                alerts?.asralertNumber = indexPath.row
+                alerts?.alertNumber = indexPath.row
         }else if alerts?.name == "Maghrib" {
-                alerts?.maghribAlertNumber = indexPath.row
+                alerts?.alertNumber = indexPath.row
         }else if alerts?.name == "Isha" {
-                alerts?.ishaAlertNumber = indexPath.row
+                alerts?.alertNumber = indexPath.row
         }
         tableView.reloadData()
         
@@ -169,15 +148,28 @@ class AlertsDetailTableViewController: UITableViewController {
         
         
             
-            var saveAlert = NSUserDefaults.standardUserDefaults()
-            saveAlert.setObject(alerts?.fajrAlertNumber, forKey: "FajrAlert")
-            saveAlert.setObject(alerts?.sunriseAlertNumber, forKey: "SunriseAlert")
-            saveAlert.setObject(alerts?.dhuhrAlertNumber, forKey: "DhuhrAlert")
-            saveAlert.setObject(alerts?.asralertNumber, forKey: "AsrAlert")
-            saveAlert.setObject(alerts?.maghribAlertNumber, forKey: "MaghribAlert")
-            saveAlert.setObject(alerts?.ishaAlertNumber, forKey: "IshaAlert")
+        var saveAlert = NSUserDefaults.standardUserDefaults()
+        
+        if alerts?.name == "Fajr" {
+            saveAlert.setObject(alerts?.alertNumber, forKey: "FajrAlert")
             
+        } else if alerts?.name == "Sunrise" {
+            saveAlert.setObject(alerts?.alertNumber, forKey: "SunriseAlert")
             
+        } else if alerts?.name == "Dhuhr" {
+            saveAlert.setObject(alerts?.alertNumber, forKey: "DhuhrAlert")
+            
+        } else if alerts?.name == "Asr" {
+            saveAlert.setObject(alerts?.alertNumber, forKey: "AsrAlert")
+            
+        } else if alerts?.name == "Maghrib" {
+            saveAlert.setObject(alerts?.alertNumber, forKey: "MaghribAlert")
+            
+        } else if alerts?.name == "Isha" {
+            saveAlert.setObject(alerts?.alertNumber, forKey: "IshaAlert")
+            
+        }
+        
             NSUserDefaults.standardUserDefaults().synchronize()
             
         
@@ -185,24 +177,40 @@ class AlertsDetailTableViewController: UITableViewController {
     
     func loadSettings () {
         
+        
+        
         var loadAlertSettings = NSUserDefaults.standardUserDefaults()
-        var fajrAlert = loadAlertSettings.objectForKey("FajrAlert") as? Int
-        var sunriseAlert = loadAlertSettings.objectForKey("SunriseAlert") as? Int
-        var dhuhrAlert = loadAlertSettings.objectForKey("DhuhrAlert") as? Int
-        var asrAlert = loadAlertSettings.objectForKey("AsrAlert") as? Int
-        var maghribAlert = loadAlertSettings.objectForKey("MaghribAlert") as? Int
-        var ishaAlert = loadAlertSettings.objectForKey("IshaAlert") as? Int
         
-        
+        if alerts?.name == "Fajr" {
+            var fajrAlert = loadAlertSettings.objectForKey("FajrAlert") as? Int
+            alerts?.alertNumber = fajrAlert
+            
+            println("loaded")
+        } else if alerts?.name == "Sunrise" {
+            var sunriseAlert = loadAlertSettings.objectForKey("SunriseAlert") as? Int
+            alerts?.alertNumber = sunriseAlert
+            
+        } else if alerts?.name == "Dhuhr" {
+            var dhuhrAlert = loadAlertSettings.objectForKey("DhuhrAlert") as? Int
+            alerts?.alertNumber = dhuhrAlert
+            
+        } else if alerts?.name == "Asr" {
+            var asrAlert = loadAlertSettings.objectForKey("AsrAlert") as? Int
+            alerts?.alertNumber = asrAlert
+            
+        } else if alerts?.name == "Maghrib" {
+            var maghribAlert = loadAlertSettings.objectForKey("MaghribAlert") as? Int
+            alerts?.alertNumber = maghribAlert
+            
+        } else if alerts?.name == "Isha" {
+            var ishaAlert = loadAlertSettings.objectForKey("IshaAlert") as? Int
+            alerts?.alertNumber = ishaAlert
+            
+        }
         
         NSUserDefaults.standardUserDefaults().synchronize()
         
-        alerts?.fajrAlertNumber = fajrAlert
-        alerts?.sunriseAlertNumber = sunriseAlert
-        alerts?.dhuhrAlertNumber = dhuhrAlert
-        alerts?.asralertNumber = asrAlert
-        alerts?.maghribAlertNumber = maghribAlert
-        alerts?.ishaAlertNumber = ishaAlert
+
         
     }
     

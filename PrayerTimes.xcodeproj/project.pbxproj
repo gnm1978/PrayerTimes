@@ -43,6 +43,7 @@
 		8D20BEAE1A58A4600037F301 /* PrayMethodeNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayMethodeNames.swift; sourceTree = "<group>"; };
 		8D20BEB21A59EBE10037F301 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = ../SettingsTableViewController.swift; sourceTree = "<group>"; };
 		8D20BEB41A59F0470037F301 /* CalculationMethodTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculationMethodTableViewController.swift; sourceTree = "<group>"; };
+		8D7C23F31A63588300F87F3B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		8DA81F351A4A73A100170DEB /* PrayerTimes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerTimes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DA81F391A4A73A100170DEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DA81F3A1A4A73A100170DEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 				8DA81F5B1A4A73D700170DEB /* PrayTime.h */,
 				8DA81F5C1A4A73D700170DEB /* PrayTime.m */,
 				8DA81F3C1A4A73A100170DEB /* ViewController.swift */,
+				8D7C23F31A63588300F87F3B /* MyPlayground.playground */,
 				8D20BEAE1A58A4600037F301 /* PrayMethodeNames.swift */,
 				8D20BEAC1A589CE40037F301 /* CurrentDate.swift */,
 				8D20BEB21A59EBE10037F301 /* SettingsTableViewController.swift */,

@@ -12,12 +12,8 @@ class Alert: NSObject {
     
     var name : String
     var alertNumber : Int?
-    var fajrAlertNumber : Int?
-    var sunriseAlertNumber : Int?
-    var dhuhrAlertNumber : Int?
-    var asralertNumber : Int?
-    var maghribAlertNumber : Int?
-    var ishaAlertNumber : Int?
+    
+
     
     var alertNames : [String] = ["Vibrate Only", "No Alert", "Azhan", "Alarm Beep", "Short Beep"]
     

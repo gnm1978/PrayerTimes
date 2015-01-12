@@ -693,7 +693,7 @@ double JDate;      // Julian date
 	
 	
 	//Tune times here
-	//Ctimes = [self tuneTimes:Ctimes];
+	Ctimes = [self tuneTimes:Ctimes];
 	
 	return Ctimes;
 }

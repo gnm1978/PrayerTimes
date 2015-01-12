@@ -17,7 +17,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var pray = PrayTime()
     
-    var test = PrayTime()
+    
+    
+    
     let locationManager = CLLocationManager()
     var geocoder = CLGeocoder()
     var placeMark : CLPlacemark?
@@ -27,7 +29,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var currentTime = NSDate()
     var timer = NSTimer()
     
-    var prayerArray = []
+    var prayerArray : NSMutableArray = NSMutableArray()
    
     
     // get the current date
@@ -54,25 +56,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        pray.setTimeFormat(0)
+        
         
         // Test Code for local notification----------------------------------------------//
-        var dateComp : NSDateComponents = NSDateComponents()
-        dateComp.year = 2015
-        dateComp.month = 1
-        dateComp.day = 10
-        dateComp.hour = 20
-        dateComp.minute = 05
-        dateComp.timeZone = NSTimeZone.systemTimeZone()
         
-        var calender : NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
-        var date : NSDate = calender.dateFromComponents(dateComp)!
         
-        var notification : UILocalNotification = UILocalNotification()
-        notification.category = "FIRST_CATEGORY"
-        notification.alertBody = "Time to Pray"
-        notification.fireDate = date
         
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
+        
+//        var dateComp : NSDateComponents = NSDateComponents()
+//        dateComp.year = Int(currentDate.year)
+//        dateComp.month = Int(currentDate.month)
+//        dateComp.day = Int(currentDate.day)
+//        dateComp.hour = 18
+//        dateComp.minute = 49
+//        dateComp.timeZone = NSTimeZone.systemTimeZone()
+//        
+//        var calender : NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+//        var date : NSDate = calender.dateFromComponents(dateComp)!
+//        
+//        var notification : UILocalNotification = UILocalNotification()
+//        notification.category = "FIRST_CATEGORY"
+//        notification.alertBody = "Time to Pray"
+//        notification.fireDate = date
+//        
+//        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+//        
+//        
+//        
+//        //po hourMinute.hourArray
         
        // End of test code----------------------------------------------------------------//
         
@@ -91,11 +104,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
         }
         
-       
-        pray.setTimeFormat(1)
-//        test.setTimeFormat(3)
-//       var test2 = test.getDatePrayerTimes(2015, andMonth: 1, andDay: 9, andLatitude: locationManager.location.coordinate.latitude, andLongitude: locationManager.location.coordinate.longitude, andtimeZone: -6)
-//        println(test2)
+        
+        
+
         
         
     }
@@ -132,9 +143,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         //println("locations = \(locValue.latitude) \(locValue.longitude)")
         self.locationLabel.text = "\(locValue.latitude)" + " \(locValue.longitude)"
         
-        var prayerArray = pray.getDatePrayerTimes(currentDate.year, andMonth: currentDate.month, andDay: currentDate.day, andLatitude: locValue.latitude, andLongitude: locValue.longitude, andtimeZone: pray.timeZone)
+         prayerArray = pray.getDatePrayerTimes(currentDate.year, andMonth: currentDate.month, andDay: currentDate.day, andLatitude: locValue.latitude, andLongitude: locValue.longitude, andtimeZone: pray.timeZone)
         
-        println(prayerArray)
+        //println(prayerArray)
+        
+        
         
         self.fajrTime.text = String(prayerArray[0] as NSString)
         //self.fajrTime.text = prayerArray[0] as? String
@@ -166,24 +179,73 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
         })
         
-        //println(prayerArray)
+        var hourMinute = convertPrayArray(prayerArray as NSMutableArray)
+        
+        
+        
+        
+        
+        // Test Code for local notification----------------------------------------------//
+        
+        
+        
+        
+        
+        
+        
+       
+        // End of test code----------------------------------------------------------------//
+        
+       
     }
     
-    func prayerAlert () {
+    func prayerAlert (prayerName : String, prayHour : Int, prayMinute : Int) {
         
-            var alert = UIAlertController(title: "Pray", message: "Its Time to Pray", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+        var dateComp : NSDateComponents = NSDateComponents()
+        dateComp.year = Int(currentDate.year)
+        dateComp.month = Int(currentDate.month)
+        dateComp.day = Int(currentDate.day)
+        dateComp.hour = prayHour
+        dateComp.minute = prayMinute
+        dateComp.timeZone = NSTimeZone.systemTimeZone()
+        
+        var calender : NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+        var date : NSDate = calender.dateFromComponents(dateComp)!
+        
+        var notification : UILocalNotification = UILocalNotification()
+        notification.category = "FIRST_CATEGORY"
+        notification.alertBody = prayerName
+        notification.fireDate = date
         
         
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
-    @IBAction func testbutton(sender: AnyObject) {
+    
+    
+   
+    
+   
+    
+    func convertPrayArray (prayArray : NSMutableArray) ->(hourArray : [Int], minuteArray : [Int]) {
         
-        var alert = UIAlertController(title: "test", message: "this is a test alert", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        var hours = [Int]()
+        var minutes = [Int]()
+        
+        for var i = 0; i < prayArray.count; i++ {
+            
+            var rangeHours : NSRange = NSMakeRange(2, 3)
+            var rangeMinutes : NSRange = NSMakeRange(0, 3)
+            var hour = prayArray[i].stringByReplacingCharactersInRange(rangeHours, withString: "")
+            hours.append(hour.toInt()!)
+            var minute = prayArray[i].stringByReplacingCharactersInRange(rangeMinutes, withString: "")
+            minutes.append(minute.toInt()!)
+            
+        }
+        return (hours, minutes)
     }
+    
     
     
     
