@@ -30,49 +30,49 @@ class TimesOfPrayer: NSObject {
 var listOfPrayers : NSMutableArray = ["05:48","07:15","11:57","14:21","16:40","16:59","17:56"]
 
 
-//func convertPrayArray (prayArray : NSMutableArray) ->(hourArray : [String], minuteArray : [String]) {
-//    
-//    var hours : [String] = [String]()
-//    var minutes : [String] = [String]()
-//
-//for var i = 0; i < listOfPrayers.count; i++ {
-//    
-//    var rangeHours : NSRange = NSMakeRange(2, 3)
-//    var rangeMinutes : NSRange = NSMakeRange(0, 3)
-//    var hour = listOfPrayers[i].stringByReplacingCharactersInRange(rangeHours, withString: "")
-//    hours.append(hour)
-//    var minute = listOfPrayers[i].stringByReplacingCharactersInRange(rangeMinutes, withString: "")
-//    minutes.append(minute)
-//    
-//    }
-//    return (hours, minutes)
-//}
-//
-//convertPrayArray(listOfPrayers)
+var formatter = NSDateFormatter()
+
+formatter.dateFormat = "HH:mm"
+var date : NSDate = formatter.dateFromString(listOfPrayers[5] as NSString)!
+
+var secondFormatter = NSDateFormatter()
+formatter.timeStyle = NSDateFormatterStyle.ShortStyle
+
+var fajrTime = formatter.stringFromDate(date)
 
 
-
-func convertPrayArray (prayArray : NSMutableArray) ->(hourArray : NSMutableArray, minuteArray : NSMutableArray) {
+func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
     
-    var hours : NSMutableArray = []
-    var minutes : NSMutableArray = []
     
-    for var i = 0; i < prayArray.count; i++ {
+    if(application.applicationState == UIApplicationState.Inactive) {
         
-        var rangeHours : NSRange = NSMakeRange(2, 3)
-        var rangeMinutes : NSRange = NSMakeRange(0, 3)
-        var hour = prayArray[i].stringByReplacingCharactersInRange(rangeHours, withString: "")
-        hours.addObject(hour)
-        var minute = prayArray[i].stringByReplacingCharactersInRange(rangeMinutes, withString: "")
-        minutes.addObject(minute)
+        println("Inactive");
+        
+        //Show the view with the content of the push
+        // User opened the push notification
+        completionHandler(UIBackgroundFetchResult.NewData);
+        
+    } else if (application.applicationState == UIApplicationState.Background) {
+        
+        println("Background");
+        // User hasn't opened it, this was a silent update
+        
+        completionHandler(UIBackgroundFetchResult.NewData);
+        
+        
+    } else {
+        
+        println("Active");
+        
+        //Show an in-app banner
+        completionHandler(UIBackgroundFetchResult.NewData);
         
     }
-    return (hours, minutes)
-}
+    
+}﻿
 
-var test = convertPrayArray(listOfPrayers)
 
-println(test.hourArray[0])
+
 
 
 

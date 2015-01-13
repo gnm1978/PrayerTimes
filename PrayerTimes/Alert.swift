@@ -13,8 +13,6 @@ class Alert: NSObject {
     var name : String
     var alertNumber : Int?
     
-
-    
     var alertNames : [String] = ["Vibrate Only", "No Alert", "Azhan", "Alarm Beep", "Short Beep"]
     
     init (name : String) {
