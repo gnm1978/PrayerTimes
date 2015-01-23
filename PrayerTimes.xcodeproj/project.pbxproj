@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D0E65A21A64C074008FDE08 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0E65A11A64C074008FDE08 /* Main.swift */; };
+		8D0E66781A6A39EE008FDE08 /* PrayTimesSechedul.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0E66771A6A39EE008FDE08 /* PrayTimesSechedul.swift */; };
 		8D174C601A5C7ED2002F02AB /* AertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D174C5F1A5C7ED2002F02AB /* AertsTableViewController.swift */; };
 		8D174C621A5C7FB7002F02AB /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D174C611A5C7FB7002F02AB /* Alert.swift */; };
 		8D174C641A5C8748002F02AB /* AlertsDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D174C631A5C8748002F02AB /* AlertsDetailTableViewController.swift */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		8D0E65A11A64C074008FDE08 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		8D0E66771A6A39EE008FDE08 /* PrayTimesSechedul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayTimesSechedul.swift; sourceTree = "<group>"; };
 		8D174C5F1A5C7ED2002F02AB /* AertsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AertsTableViewController.swift; sourceTree = "<group>"; };
 		8D174C611A5C7FB7002F02AB /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		8D174C631A5C8748002F02AB /* AlertsDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				8DA81F5B1A4A73D700170DEB /* PrayTime.h */,
 				8DA81F5C1A4A73D700170DEB /* PrayTime.m */,
 				8DA81F3C1A4A73A100170DEB /* ViewController.swift */,
+				8D0E66771A6A39EE008FDE08 /* PrayTimesSechedul.swift */,
 				8D0E65A11A64C074008FDE08 /* Main.swift */,
 				8D7C23F31A63588300F87F3B /* MyPlayground.playground */,
 				8D20BEAE1A58A4600037F301 /* PrayMethodeNames.swift */,
@@ -260,6 +263,7 @@
 				8DA81F5D1A4A73D700170DEB /* PrayTime.m in Sources */,
 				8D174C601A5C7ED2002F02AB /* AertsTableViewController.swift in Sources */,
 				8D174C661A5C9308002F02AB /* UserSettings.swift in Sources */,
+				8D0E66781A6A39EE008FDE08 /* PrayTimesSechedul.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

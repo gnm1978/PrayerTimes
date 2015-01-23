@@ -7,17 +7,16 @@
 //
 
 import Foundation
-
-extension NSDate {
-    var minute: Int { return NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitMinute, fromDate: self).minute }
-    var hour:   Int { return NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitHour,   fromDate: self).hour   }
-    var day:    Int { return NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay,    fromDate: self).day    }
-    var month:  Int { return NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitMonth,  fromDate: self).month  }
-    var year:   Int { return NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitYear,   fromDate: self).year   }
+public extension NSDate {
+    func xDays(x:Int) -> NSDate {
+        return NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: x, toDate: self, options: nil)!
+    }
+    var day:            Int { return NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitDay,           fromDate: self).day           }
+    var month:          Int { return NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitMonth,         fromDate: self).month         }
+    var year:           Int { return NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitYear,          fromDate: self).year          }
+    var fireDateAt7am: NSDate    { return NSCalendar.currentCalendar().dateWithEra(1, year: year, month: month, day: day, hour: 0, minute: 0, second: 0, nanosecond: 0)! }
+    var fireDateAt8am: NSDate    { return NSCalendar.currentCalendar().dateWithEra(1, year: year, month: month, day: day, hour: 0, minute: 0, second: 0, nanosecond: 0)! }
     func fireDateAt(hr:Int, min:Int) -> NSDate {
-        if hr > NSDate().hour || (hr == NSDate().hour && min > NSDate().minute){
-            return  NSCalendar.currentCalendar().dateWithEra(1, year: year, month: month, day: day, hour: hr, minute: min, second: 0, nanosecond: 0)!
-        }
-        return NSCalendar.currentCalendar().dateWithEra(1, year: year, month: month, day: day+1, hour: hour, minute: min, second: 0, nanosecond: 0)!
+        return NSCalendar.currentCalendar().dateWithEra(1, year: year, month: month, day: day, hour: hr, minute: min, second: 0, nanosecond: 0)!
     }
 }

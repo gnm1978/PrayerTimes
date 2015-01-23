@@ -15,42 +15,28 @@ import CoreLocation
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
-    var pray = PrayTime()
+    //var pray = PrayTime()
     var dateComp : NSDateComponents = NSDateComponents()
-    
     let locationManager = CLLocationManager()
     var geocoder = CLGeocoder()
     var placeMark : CLPlacemark?
-    
-    
-    
+    var calcMethodNumber : Int32?
+    var prayTime = PrayTimesSechedul()
     var currentTime = NSDate()
     var timer = NSTimer()
-    
-    var prayerArray : NSMutableArray = NSMutableArray()
-    
-    var calcMethodArray : [Int32] = [3,5,1,4,2]
-    
-    
-    
-   
-    
-    // get the current date
+    var prayMethod = UserSettings()
     var currentDate = CurrentDate()
+    var notification : UILocalNotification?
     
     
     @IBOutlet weak var locationLabel: UILabel!
-    
     @IBOutlet weak var fajrTime: UILabel!
     @IBOutlet weak var sunriseTime: UILabel!
     @IBOutlet weak var dhuhrTime: UILabel!
     @IBOutlet weak var asrTime: UILabel!
     @IBOutlet weak var maghribTime: UILabel!
     @IBOutlet weak var ishaTime: UILabel!
-    
     @IBOutlet weak var currentTimeLabel: UILabel!
-    
-    
     @IBOutlet weak var cityStateLabel: UILabel!
     
     
@@ -58,10 +44,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        pray.setTimeFormat(0)
-        updateUI()
-        
         
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
@@ -71,14 +53,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             self.locationManager.delegate = self
             self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             self.locationManager.startUpdatingLocation()
-            
         }
         
+        
+       
+        
+        var calcMethod = NSUserDefaults.standardUserDefaults().integerForKey("MethodNumber")
+        var asrMethod = NSUserDefaults.standardUserDefaults().integerForKey("AsrMethodNumber")
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "calcMethod:", name: "calcMethodData", object: nil)
+        
+    
     }
+    
+
     
     override func viewWillAppear(animated: Bool) {
         
-        updateUI()
+        
         getCurrentTime()
         
         geocoder.reverseGeocodeLocation(locationManager.location, completionHandler: { (placeMarks, error) -> Void in
@@ -94,13 +86,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
         })
         
-        self.locationLabel.text = "\(locationManager.location.coordinate.latitude)" + " \(locationManager.location.coordinate.longitude)"
+        
+        
     }
     
-    override func viewDidAppear(animated: Bool) {
-        
-        updateUI()
-    }
+
     
 
     override func didReceiveMemoryWarning() {
@@ -117,39 +107,98 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         var formatter = NSDateFormatter()
         formatter.timeStyle = NSDateFormatterStyle.MediumStyle
         currentTimeLabel.text = formatter.stringFromDate(currentTime)
+       
         
          timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "getCurrentTime", userInfo: nil, repeats: true)
     }
 
         
         
-        func prayerAlert (prayerName : String, prayHour : Int, prayMinute : Int) {
-            var notification = UILocalNotification()
-            notification.timeZone  = NSTimeZone.localTimeZone()
-            notification.alertBody = prayerName
-            notification.fireDate  = NSDate().fireDateAt(prayHour, min: prayMinute)
-            UIApplication.sharedApplication().scheduleLocalNotification(notification)
-        }
     
     
-    
-    func convertPrayArray (prayArray : NSMutableArray) ->(hourArray : [Int], minuteArray : [Int]) {
+    func alerts () {
         
-        var hours = [Int]()
-        var minutes = [Int]()
-        
-        for var i = 0; i < prayArray.count; i++ {
-            
-            var rangeHours : NSRange = NSMakeRange(2, 3)
-            var rangeMinutes : NSRange = NSMakeRange(0, 3)
-            var hour = prayArray[i].stringByReplacingCharactersInRange(rangeHours, withString: "")
-            hours.append(hour.toInt()!)
-            var minute = prayArray[i].stringByReplacingCharactersInRange(rangeMinutes, withString: "")
-            minutes.append(minute.toInt()!)
-            
+            var notificationFajr : UILocalNotification = UILocalNotification()
+            notificationFajr.timeZone = NSTimeZone.defaultTimeZone()
+            notificationFajr.alertBody = "Time For Fajr Prayer"
+        if prayTime.fajr.compare(currentTime) == NSComparisonResult.OrderedDescending {
+            notificationFajr.fireDate = prayTime.fajr
+            UIApplication.sharedApplication().scheduleLocalNotification(notificationFajr)
         }
-        return (hours, minutes)
+        
+        
+            var notificationSunrise : UILocalNotification = UILocalNotification()
+            notificationSunrise.timeZone = NSTimeZone.defaultTimeZone()
+            notificationSunrise.alertBody = "Time For Sunrise Prayer"
+        if prayTime.sunrise.compare(currentTime) == NSComparisonResult.OrderedDescending {
+            notificationSunrise.fireDate = prayTime.sunrise
+            UIApplication.sharedApplication().scheduleLocalNotification(notificationSunrise)
+        }
+        
+            var notificationDhuhr : UILocalNotification = UILocalNotification()
+            notificationDhuhr.timeZone = NSTimeZone.defaultTimeZone()
+            notificationDhuhr.alertBody = "Time For Dhuhr Prayer"
+        if prayTime.dhuhr.compare(currentTime) == NSComparisonResult.OrderedDescending {
+            notificationDhuhr.fireDate = prayTime.dhuhr
+            UIApplication.sharedApplication().scheduleLocalNotification(notificationDhuhr)
+        }
+        
+        
+            var notificationAsr : UILocalNotification = UILocalNotification()
+            notificationAsr.timeZone = NSTimeZone.defaultTimeZone()
+            notificationAsr.alertBody = "Time For Asr Prayer"
+        if prayTime.asr.compare(currentTime) == NSComparisonResult.OrderedDescending {
+            notificationAsr.fireDate = prayTime.asr
+            UIApplication.sharedApplication().scheduleLocalNotification(notificationAsr)
+        }
+        
+            var notificationMaghrib : UILocalNotification = UILocalNotification()
+            notificationMaghrib.timeZone = NSTimeZone.defaultTimeZone()
+            notificationMaghrib.alertBody = "Time For Maghrib Prayer"
+        if prayTime.maghrib.compare(currentTime) == NSComparisonResult.OrderedDescending {
+            notificationMaghrib.fireDate = prayTime.maghrib
+            UIApplication.sharedApplication().scheduleLocalNotification(notificationMaghrib)
+        }
+        
+        
+        
+            var notificationIsha : UILocalNotification = UILocalNotification()
+            notificationIsha.timeZone = NSTimeZone.defaultTimeZone()
+            notificationIsha.alertBody = "Time For Isha Prayer"
+        if prayTime.isha.compare(currentTime) == NSComparisonResult.OrderedDescending {
+            notificationIsha.fireDate = prayTime.isha
+            UIApplication.sharedApplication().scheduleLocalNotification(notificationIsha)
+        }
+        
+        var notificationTest : UILocalNotification = UILocalNotification()
+        notificationTest.timeZone = NSTimeZone.defaultTimeZone()
+        var fireDate = NSDate().fireDateAt(19, min: 48)
+        notificationTest.alertBody = "This is a test"
+        if fireDate.compare(currentTime) == NSComparisonResult.OrderedDescending {
+            
+            notificationTest.fireDate = fireDate
+            UIApplication.sharedApplication().scheduleLocalNotification(notificationTest)
+        }
+        
+        
     }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        
+        var convTime = convertTimeFormat(prayTime.prayArray)
+        
+        self.fajrTime.text = String(convTime[0] as NSString)
+        self.sunriseTime.text = String(convTime[1] as NSString)
+        self.dhuhrTime.text = String(convTime[2] as NSString)
+        self.asrTime.text = String(convTime[3] as NSString)
+        self.maghribTime.text = String(convTime[4] as NSString)
+        self.ishaTime.text = String(convTime[6] as NSString)
+        
+        self.locationLabel.text = "\(locationManager.location.coordinate.latitude)" + " \(locationManager.location.coordinate.longitude)"
+        alerts()
+        
+    }
+    
     
     func convertTimeFormat (arrayOfTime : NSMutableArray) -> NSMutableArray {
         
@@ -162,7 +211,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             var secondFormatter = NSDateFormatter()
             secondFormatter.dateFormat = "hh:mm a"
-            //secondFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+
             
             var convertedTime = secondFormatter.stringFromDate(time)
             
@@ -173,39 +222,5 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    func updateUI () {
-        
-        var loadCalcInt = NSUserDefaults.standardUserDefaults()
-        var calcInt = loadCalcInt.integerForKey("calcNumber")
-        
-        pray.setCalcMethod(Int32(calcMethodArray[calcInt]))
-        
-        prayerArray = pray.getDatePrayerTimes(currentDate.year, andMonth: currentDate.month, andDay: currentDate.day, andLatitude: locationManager.location.coordinate.latitude, andLongitude: locationManager.location.coordinate.longitude, andtimeZone: pray.timeZone)
-        
-        
-        var convTime = convertTimeFormat(prayerArray)
-        
-        self.fajrTime.text = String(convTime[0] as NSString)
-        self.sunriseTime.text = String(convTime[1] as NSString)
-        self.dhuhrTime.text = String(convTime[2] as NSString)
-        self.asrTime.text = String(convTime[3] as NSString)
-        self.maghribTime.text = String(convTime[4] as NSString)
-        self.ishaTime.text = String(convTime[6] as NSString)
-        
-        
-        
-        var timesArray = pray.getDatePrayerTimes(currentDate.year, andMonth: currentDate.month, andDay: currentDate.day, andLatitude: locationManager.location.coordinate.latitude, andLongitude: locationManager.location.coordinate.longitude, andtimeZone: pray.timeZone)
-        
-        
-        var convertedTime = convertPrayArray(timesArray as NSMutableArray)
-        
-        prayerAlert("Time for Fajr", prayHour: convertedTime.hourArray[0], prayMinute: convertedTime.minuteArray[0])
-        prayerAlert("Time for SunRise", prayHour: convertedTime.hourArray[1], prayMinute: convertedTime.minuteArray[1])
-        prayerAlert("Time for Dhuhr", prayHour: convertedTime.hourArray[2], prayMinute: convertedTime.minuteArray[2])
-        prayerAlert("Time for Asr", prayHour: convertedTime.hourArray[3], prayMinute: convertedTime.minuteArray[3])
-        prayerAlert("Time for Maghrib", prayHour: convertedTime.hourArray[5], prayMinute: convertedTime.minuteArray[5])
-        prayerAlert("Time for Isha", prayHour: convertedTime.hourArray[6], prayMinute: convertedTime.minuteArray[6])    }
-    
-
-}
+    }
 

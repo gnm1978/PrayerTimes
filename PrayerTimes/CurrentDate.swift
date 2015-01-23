@@ -16,6 +16,7 @@ class CurrentDate: NSObject {
     var year : Int32 {
         
         format.dateFormat = "yyy"
+        //format.timeZone = NSTimeZone(name: "UTC")
         format.stringFromDate(currentDate)
         var currentYear = Int32(format.stringFromDate(currentDate) .toInt()!)
         return currentYear
@@ -25,6 +26,7 @@ class CurrentDate: NSObject {
     var month : Int32 {
         
         format.dateFormat = "MM"
+        //format.timeZone = NSTimeZone(name: "UTC")
         format.stringFromDate(currentDate)
         var currentMonth = Int32(format.stringFromDate(currentDate) .toInt()!)
         return currentMonth
@@ -33,6 +35,7 @@ class CurrentDate: NSObject {
     var day : Int32 {
         
         format.dateFormat = "dd"
+        //format.timeZone = NSTimeZone(name: "UTC")
         format.stringFromDate(currentDate)
         var currentDay = Int32(format.stringFromDate(currentDate) .toInt()!)
         return currentDay
